@@ -54,8 +54,12 @@ df_filtered = df[mask]
 try:
     bar_chart = px.bar(df_filtered,
                     x=df_filtered.groupby(filter_selection).median()['resale_price'].index,
-                    y=df_filtered.groupby(filter_selection).median()['resale_price'])
-
+                    y=df_filtered.groupby(filter_selection).median()['resale_price'],
+                    text=df_filtered.groupby(filter_selection).median()['resale_price']).update_layout(
+        xaxis_title=filter_selection, yaxis_title="Median Resale Price"
+    )
+    
+    
     st.plotly_chart(bar_chart)
 except ValueError:
     st.write("Please select the values")
