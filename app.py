@@ -13,7 +13,7 @@ df = pd.read_csv(csv_file)
 flat_type = df['flat_type'].unique().tolist()
 town = df['town'].unique().tolist()
 lease_commence_date = df['lease_commence_date'].unique().tolist()
-filter = ['flat_type','town']
+filter = ['flat_type','town','lease_commence_date']
 
 
 #Index(['month', 'town', 'flat_type', 'block', 'street_name', 
@@ -57,15 +57,20 @@ st.markdown(f'*Available Results: {number_of_result}*')
 df_filtered = df[mask]
 
 try:
-    bar_chart = px.bar(df_filtered,
-                    x=df_filtered.groupby(filter_selection).median()['resale_price'].index,
-                    y=df_filtered.groupby(filter_selection).median()['resale_price'],
-                    text=df_filtered.groupby(filter_selection).median()['resale_price']).update_layout(
-        xaxis_title=filter_selection, yaxis_title="Median Resale Price"
-    )
-    
-    
-    st.plotly_chart(bar_chart)
+    if filter_selection == "lease_commence_date":
+        chart = px.line(df_filtered,
+                        x=df_filtered.groupby(filter_selection).median()['resale_price'].index,
+                        y=df_filtered.groupby(filter_selection).median()['resale_price'],
+                        text=df_filtered.groupby(filter_selection).median()['resale_price']).update_layout(
+            xaxis_title=filter_selection, yaxis_title="Median Resale Price")
+    else:
+        chart = px.bar(df_filtered,
+                        x=df_filtered.groupby(filter_selection).median()['resale_price'].index,
+                        y=df_filtered.groupby(filter_selection).median()['resale_price'],
+                        text=df_filtered.groupby(filter_selection).median()['resale_price']).update_layout(
+            xaxis_title=filter_selection, yaxis_title="Median Resale Price")
+        
+    st.plotly_chart(chart)
 except ValueError:
     st.write("Please select the values")
 # bar_chart = px.bar(df_grouped,
