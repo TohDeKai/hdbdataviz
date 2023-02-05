@@ -84,8 +84,7 @@ try:
     if filter_selection == "lease_commence_date" or filter_selection == 'transaction_month':
         chart = px.line(df_filtered,
                         x=df_filtered.groupby(filter_selection).median()['resale_price'].index,
-                        y=df_filtered.groupby(filter_selection).median()['resale_price'],
-                        text=df_filtered.groupby(filter_selection).median()['resale_price']).update_layout(
+                        y=df_filtered.groupby(filter_selection).median()['resale_price'].update_layout(
             xaxis_title=filter_selection, yaxis_title="Median Resale Price")
     else:
         chart = px.bar(df_filtered,
