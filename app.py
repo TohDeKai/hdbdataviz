@@ -1,19 +1,24 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-from PIL import Image
+from datetime import datetime
 
 st.set_page_config(page_title="HDB Resale Transactions")
 
 # Load dataframe
 csv_file = 'resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv'
 df = pd.read_csv(csv_file)
-
+df['month'] = pd.to_datetime(df['month'], format="%Y-%m")
 # Selection
 flat_type = df['flat_type'].unique().tolist()
 town = df['town'].unique().tolist()
 lease_commence_date = df['lease_commence_date'].unique().tolist()
-filter = ['flat_type','town','lease_commence_date']
+
+# Filtering month
+month = df['month'].unique().tolist()
+
+# List of filters
+filter = ['flat_type','town','lease_commence_date','month']
 
 
 #Index(['month', 'town', 'flat_type', 'block', 'street_name', 
@@ -24,6 +29,7 @@ filter = ['flat_type','town','lease_commence_date']
 filter_selection = st.selectbox('Select filtering criteria: ',
                       filter)
 
+# Filtering flat type
 flat_type_container = st.container()
 all_flat = st.checkbox(label="Select all flats",key='flat')
  
@@ -33,7 +39,8 @@ if all_flat:
 else:
     flat_type_selection =  flat_type_container.multiselect("Select flat type:",
         flat_type)
-    
+
+# Filtering town    
 town_container = st.container()
 all_town = st.checkbox(label="Select all towns",key='town')
  
@@ -44,20 +51,35 @@ else:
     town_selection =  town_container.multiselect("Select town:",
         town)
 
+# Filtering lease commence date
 lease_commence_date_selection = st.slider('Lease Commence Date:',
                                           min_value=min(lease_commence_date),
                                           max_value=max(lease_commence_date),
                                           value=(min(lease_commence_date),max(lease_commence_date)))
 
+# Filtering by transaction date
+format = "YYYY-MM"
+start_date = df['month'].min()
+start_date = start_date.to_pydatetime()
+end_date = df['month'].max()
+end_date = end_date.to_pydatetime()
+month_selection = st.slider('Transaction Date:',
+                                          min_value=start_date,
+                                          max_value=end_date,
+                                          value=(start_date,end_date))
+
 # Filtering based on selection
-mask = (df['flat_type'].isin(flat_type_selection) & df['town'].isin(town_selection)&df['lease_commence_date'].between(*lease_commence_date_selection))
+mask = (df['flat_type'].isin(flat_type_selection) 
+        &df['town'].isin(town_selection)
+        &df['lease_commence_date'].between(*lease_commence_date_selection)
+        &df['month'].between(*month_selection))
 number_of_result = df[mask].shape[0]
 st.markdown(f'*Available Results: {number_of_result}*')
 
 df_filtered = df[mask]
 
 try:
-    if filter_selection == "lease_commence_date":
+    if filter_selection == "lease_commence_date" or filter_selection == 'month':
         chart = px.line(df_filtered,
                         x=df_filtered.groupby(filter_selection).median()['resale_price'].index,
                         y=df_filtered.groupby(filter_selection).median()['resale_price'],
