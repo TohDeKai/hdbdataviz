@@ -12,6 +12,7 @@ df = pd.read_csv(csv_file)
 # Selection
 flat_type = df['flat_type'].unique().tolist()
 town = df['town'].unique().tolist()
+lease_commence_date = df['lease_commence_date'].unique().tolist()
 filter = ['flat_type','town']
 
 
@@ -43,9 +44,13 @@ else:
     town_selection =  town_container.multiselect("Select town:",
         town)
 
+lease_commence_date_selection = st.slider('Lease Commence Date:',
+                                          min_value=min(lease_commence_date),
+                                          max_value=max(lease_commence_date),
+                                          value=(min(lease_commence_date),max(lease_commence_date)))
 
 # Filtering based on selection
-mask = (df['flat_type'].isin(flat_type_selection) & df['town'].isin(town_selection))
+mask = (df['flat_type'].isin(flat_type_selection) & df['town'].isin(town_selection)&df['lease_commence_date'].between(*lease_commence_date_selection))
 number_of_result = df[mask].shape[0]
 st.markdown(f'*Available Results: {number_of_result}*')
 
