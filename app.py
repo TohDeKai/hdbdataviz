@@ -22,7 +22,7 @@ transaction_month = df['transaction_month'].unique().tolist()
 # List of filters
 filter = ['flat_type','town','lease_commence_date','transaction_month']
 
-
+# Below are the columns for the dataframe
 #Index(['transaction_month', 'town', 'flat_type', 'block', 'street_name', 
 # 'storey_range','floor_area_sqm', 'flat_model', 
 # 'lease_commence_date','remaining_lease', 'resale_price'],dtype='object')
@@ -84,8 +84,7 @@ try:
     if filter_selection == "lease_commence_date" or filter_selection == 'transaction_month':
         chart = px.line(df_filtered,
                         x=df_filtered.groupby(filter_selection).median()['resale_price'].index,
-                        y=df_filtered.groupby(filter_selection).median()['resale_price'],
-                        text=df_filtered.groupby(filter_selection).median()['resale_price']).update_layout(
+                        y=df_filtered.groupby(filter_selection).median()['resale_price']).update_layout(
             xaxis_title=filter_selection, yaxis_title="Median Resale Price")
     else:
         chart = px.bar(df_filtered,
