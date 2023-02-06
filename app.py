@@ -22,7 +22,7 @@ transaction_month = df['transaction_month'].unique().tolist()
 # List of filters
 filter = ['flat_type','town','lease_commence_date','transaction_month']
 
-
+# Below are the columns for the dataframe
 #Index(['transaction_month', 'town', 'flat_type', 'block', 'street_name', 
 # 'storey_range','floor_area_sqm', 'flat_model', 
 # 'lease_commence_date','remaining_lease', 'resale_price'],dtype='object')
