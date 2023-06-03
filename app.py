@@ -96,6 +96,7 @@ try:
     st.plotly_chart(chart)
 except ValueError:
     st.write("Please select the values")
+    
 # bar_chart = px.bar(df_grouped,
 #                   x=df_grouped[filter_selection],
 #                   y=df_grouped['resale_price'],
