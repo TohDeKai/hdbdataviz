@@ -43,15 +43,7 @@ else:
         flat_type)
 
 # Filtering town    
-town_container = st.container()
-all_town = st.checkbox(label="Select all towns",key='town')
- 
-if all_town:
-    town_selection = town_container.multiselect("Select town:",
-         town, town)
-else:
-    town_selection =  town_container.multiselect("Select town:",
-        town)
+
 
 # Filtering lease commence date
 lease_commence_date_selection = st.slider('Lease Commence Date:',
@@ -72,7 +64,6 @@ transaction_month_selection = st.slider('Transaction Date:',
 
 # Filtering based on selection
 mask = (df['flat_type'].isin(flat_type_selection) 
-        &df['town'].isin(town_selection)
         &df['lease_commence_date'].between(*lease_commence_date_selection)
         &df['transaction_month'].between(*transaction_month_selection))
 number_of_result = df[mask].shape[0]
