@@ -11,17 +11,16 @@ df = pd.read_csv(csv_file)
 df['month'] = pd.to_datetime(df['month'], format="%Y-%m")
 df = df.rename(columns={'month': 'transaction_month'})
 
-st.write("TEST")
-
 # Selection
 flat_type = df['flat_type'].unique().tolist()
+town = df['town'].unique().tolist()
 lease_commence_date = df['lease_commence_date'].unique().tolist()
 
 # Filtering month
 transaction_month = df['transaction_month'].unique().tolist()
 
 # List of filters
-filter = ['flat_type','lease_commence_date','transaction_month']
+filter = ['flat_type','town','lease_commence_date','transaction_month']
 
 # Below are the columns for the dataframe
 #Index(['transaction_month', 'town', 'flat_type', 'block', 'street_name', 
@@ -44,7 +43,15 @@ else:
         flat_type)
 
 # Filtering town    
-
+town_container = st.container()
+all_town = st.checkbox(label="Select all towns",key='town')
+ 
+if all_town:
+    town_selection = town_container.multiselect("Select town:",
+         town, town)
+else:
+    town_selection =  town_container.multiselect("Select town:",
+        town)
 
 # Filtering lease commence date
 lease_commence_date_selection = st.slider('Lease Commence Date:',
@@ -65,6 +72,7 @@ transaction_month_selection = st.slider('Transaction Date:',
 
 # Filtering based on selection
 mask = (df['flat_type'].isin(flat_type_selection) 
+        &df['town'].isin(town_selection)
         &df['lease_commence_date'].between(*lease_commence_date_selection)
         &df['transaction_month'].between(*transaction_month_selection))
 number_of_result = df[mask].shape[0]
