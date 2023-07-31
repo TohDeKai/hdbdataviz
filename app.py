@@ -13,14 +13,13 @@ df = df.rename(columns={'month': 'transaction_month'})
 
 # Selection
 flat_type = df['flat_type'].unique().tolist()
-town = df['town'].unique().tolist()
 lease_commence_date = df['lease_commence_date'].unique().tolist()
 
 # Filtering month
 transaction_month = df['transaction_month'].unique().tolist()
 
 # List of filters
-filter = ['flat_type','town','lease_commence_date','transaction_month']
+filter = ['flat_type','lease_commence_date','transaction_month']
 
 # Below are the columns for the dataframe
 #Index(['transaction_month', 'town', 'flat_type', 'block', 'street_name', 
