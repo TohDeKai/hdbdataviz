@@ -11,6 +11,8 @@ df = pd.read_csv(csv_file)
 df['month'] = pd.to_datetime(df['month'], format="%Y-%m")
 df = df.rename(columns={'month': 'transaction_month'})
 
+st.write("TEST")
+
 # Selection
 flat_type = df['flat_type'].unique().tolist()
 lease_commence_date = df['lease_commence_date'].unique().tolist()
