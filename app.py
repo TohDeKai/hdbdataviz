@@ -12,9 +12,12 @@ df['month'] = pd.to_datetime(df['month'], format="%Y-%m")
 df = df.rename(columns={'month': 'transaction_month'})
 
 # Preview dataframe
-st.dataframe(df)
+st.header("Sample of the dataset")
+st.dataframe(df.sample(10))
 
 # Selection
+st.markdown('#')
+st.write("Choose criteria for comparison for data visualisation purposes")
 flat_type = df['flat_type'].unique().tolist()
 town = df['town'].unique().tolist()
 lease_commence_date = df['lease_commence_date'].unique().tolist()
@@ -37,7 +40,7 @@ filter_selection = st.selectbox('Select filtering criteria: ',
 # Filtering flat type
 flat_type_container = st.container()
 all_flat = st.checkbox(label="Select all flats",key='flat')
- 
+
 if all_flat:
     flat_type_selection = flat_type_container.multiselect("Select flat type:",
          flat_type, flat_type)
