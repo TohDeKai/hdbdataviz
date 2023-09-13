@@ -11,10 +11,15 @@ df = pd.read_csv(csv_file)
 df['month'] = pd.to_datetime(df['month'], format="%Y-%m")
 df = df.rename(columns={'month': 'transaction_month'})
 
-# Preview dataframe
-st.header("Sample of the dataset")
-st.dataframe(df.sample(10))
+# Adding title
+st.title(":house_buildings: HDB Resale Prices")
 
+# Preview dataframe
+st.header(":mag: Dataframe")
+st.dataframe(df)
+st.write('Total transactions: ', len(df.index))
+
+st.divider()
 # Selection
 st.markdown('#')
 st.write("Choose criteria for comparison for data visualisation purposes")
@@ -85,6 +90,8 @@ number_of_result = df[mask].shape[0]
 st.markdown(f'*Available Results: {number_of_result}*')
 
 df_filtered = df[mask]
+
+st.divider()
 
 try:
     if filter_selection == "lease_commence_date" or filter_selection == 'transaction_month':
