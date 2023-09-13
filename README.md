@@ -9,3 +9,12 @@ We can make data visualisations with several filters such as
 - town
 - lense commence date
 - transaction date
+
+## How to run this Streamlit app locally
+
+Firstly, clone this repo
+```
+git status
+git add
+git commit
+```

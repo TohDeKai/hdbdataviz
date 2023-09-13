@@ -6,7 +6,7 @@ from datetime import datetime
 st.set_page_config(page_title="HDB Resale Transactions")
 
 # Load dataframe
-csv_file = 'resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv'
+csv_file = './resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv'
 df = pd.read_csv(csv_file)
 df['month'] = pd.to_datetime(df['month'], format="%Y-%m")
 df = df.rename(columns={'month': 'transaction_month'})
