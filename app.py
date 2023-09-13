@@ -13,6 +13,7 @@ df = df.rename(columns={'month': 'transaction_month'})
 
 # Adding title
 st.title(":house_buildings: HDB Resale Prices")
+st.caption("Contains information from ['Resale flat prices based on registration date from Jan-2017 onwards'](https://beta.data.gov.sg/datasets/189/resources/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view) accessed on 13 Sept 2023 from [data.gov.sg](https://beta.data.gov.sg/) which is made available under the terms of the [Singapore Open Data Licence version 1.0](https://beta.data.gov.sg/open-data-license)")
 
 # Preview dataframe
 st.header(":mag: Dataframe")
