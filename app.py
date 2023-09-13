@@ -11,6 +11,9 @@ df = pd.read_csv(csv_file)
 df['month'] = pd.to_datetime(df['month'], format="%Y-%m")
 df = df.rename(columns={'month': 'transaction_month'})
 
+# Preview dataframe
+st.dataframe(df)
+
 # Selection
 flat_type = df['flat_type'].unique().tolist()
 town = df['town'].unique().tolist()
